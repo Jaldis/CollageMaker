@@ -1,0 +1,268 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+      .flex-container-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      
+      .pic-grid {
+        border: 1px solid;
+        border-color: aqua;
+        background-image: url("/default.jpg");      
+        background-size:contain;
+        background-size: 100% 100%;
+        height: 200px;
+        width: 200px;
+        cursor: pointer;
+      }
+
+      .collage-name-form {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        width: 700px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+              <h4 class="text-white">About</h4>
+              <p class="text-muted"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="./" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            <strong>Home</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Collage Maker</h1>
+          <p class="lead text-muted">Step 1: Please enter name</p>
+         
+          <form method="post" action="image" id="form-upload-image" enctype="multipart/form-data" style="display: none;">
+            <input class="btn btn-primary my-2" type="file" name="image" id="file-pic" />
+            <button class="btn btn-primary my-2" type="submit" 
+            name="upload">Upload</button>
+          </form>
+          <div class="input-group mb-3 collage-name-form">
+            <span class="input-group-text">Name</span>
+            <input type="text" class="form-control" id="txt-collage-name"
+            placeholder="" aria-label="name" 
+            aria-describedby="txt-collage-name">
+          </div>
+          <p>
+            <button class="btn btn-primary my-4" id="btn-next-step">Next Step</button>
+          </p>
+          <!-- <p>
+            <button class="btn btn-primary my-4" onclick="collage2()">Test</button>
+          </p> -->
+        </div>
+      </section>
+      <section class="text-center" id="div-collage" style="display: none;">
+        <p class="lead text-muted">Step 2: Click on the grid to upload pic</p>
+        
+        <div class="container" id="div-collage-1" >
+          <div class="flex-container-row">
+            <div class="pic-grid" name="a"></div>
+            <div class="pic-grid" name="b"></div>
+            <div class="pic-grid" name="c"></div>
+            <div class="pic-grid" name="d"></div>       
+          </div>
+          <div class="flex-container-row">
+            <div class="pic-grid" name="e"></div>
+            <div class="pic-grid" name="f"></div>
+            <div class="pic-grid" name="g"></div>
+            <div class="pic-grid" name="h"></div>       
+          </div>
+          <div class="flex-container-row">
+            <div class="pic-grid" name="i"></div>
+            <div class="pic-grid" name="j"></div>
+            <div class="pic-grid" name="k" ></div>
+            <div class="pic-grid" name="l"></div>       
+          </div>
+        </div>
+        <p>
+          <button class="btn btn-primary my-4" style="width: 400px;" id="btn-collage">
+            Confirm
+          </button>
+        </p>
+        
+      </section>
+      <section>
+        <!-- <canvas id="canvas1" style="width:500px;height:500px;"></canvas> -->
+        <!-- <div  style="width:500px;height:500px;">
+          <img id="canvas-image" style="width: 100%;" src="">
+        </div> -->
+      </section>
+
+    </main>
+    <footer style="height: 100px;" id="footer">
+      
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="mi.js" ></script>
+    <script>
+
+      var selectedDiv = ''
+      var collageName = ''
+      var timesCalled = 0;
+      var imageName = ''
+
+    
+      document.getElementById('btn-next-step').onclick = function() {
+
+        var txtCollage = document.getElementById('txt-collage-name');
+        collageName = txtCollage.value
+        if(collageName == '') {
+          alert('Please enter a name');
+          return;
+        }
+        var e = document.getElementById('div-collage');
+        e.style.display = 'block'
+        scrollTo(document.documentElement, e.offsetTop, 600);
+        createDirectory(collageName);
+        txtCollage.disabled = true;
+        this.disabled = true;
+      }
+
+      document.querySelector('#file-pic').onchange = function() {   
+        
+        //alert(document.getElementById('file-pic').files.length);
+        var form = document.querySelector('#form-upload-image')
+        var formData = new FormData(form);
+        console.log(formData)
+        submitImage(formData);
+       
+      }
+
+      var pg = document.querySelectorAll('.pic-grid')
+        for(i = 0;i < pg.length; i++) {  
+          pg[i].onclick = function(e) {
+            selectedDiv = this
+            console.log(e.target.getAttribute("name"));
+            imageName = e.target.getAttribute("name")
+            document.querySelector('#file-pic').click()        
+          }
+      }
+
+      document.getElementById('btn-collage').onclick = function() {
+        var mode = '4x3'
+        collage2(collageName, mode)
+      }
+
+      function createDirectory(dir) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {    
+          console.log('created dir ' + this.responseText)
+        }
+        xhttp.open("POST", "image/cdir?dir_name=" + collageName);
+        xhttp.send({
+          name: collageName
+        });
+      }
+
+      function submitImage(data) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+         
+          var obj = JSON.parse(this.responseText);
+          console.log(obj);
+          selectedDiv.style.backgroundImage = `url('image/${collageName}/${obj.name}')`;
+
+        }
+        xhttp.open("POST", "image?dir_name=" + collageName + '&i_c=' + imageName);
+        xhttp.send(data);
+      }
+
+      function collage(collageName, mode){
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+          console.log(this.responseText);
+        }
+        xhttp.open('POST', 'image/collage?dir_name=' + collageName + '&mode=' + mode);
+        xhttp.send();
+      }
+
+      function scrollTo(element, to, duration) {
+        if (duration <= 0) return;
+        var difference = to - element.scrollTop;
+        var perTick = difference / duration * 10;
+
+        setTimeout(function() {
+          element.scrollTop = element.scrollTop + perTick;
+          if (element.scrollTop === to) return;
+          scrollTo(element, to, duration - 10);
+        }, 10);
+      }
+
+      function collage2(collageName, mode) {
+        console.log('collage2');
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange  = function() {
+          if (this.readyState == 4 && this.status == 200)
+          {
+            timesCalled++
+            var obj = JSON.parse(this.responseText);
+            console.log(obj);
+            mergeImages(obj).then(
+              b64 => { 
+                //document.getElementById('canvas-image').src = b64
+                //console.log(b64)
+                downloadImage(b64)
+              }             
+            );         
+          }
+          
+        }
+        xhttp.open('POST', 'image/collage?dir_name=' + collageName + '&mode=' + mode);
+        xhttp.send();
+       
+      }
+
+      function downloadImage(url) {
+      
+        var link = document.createElement('a');
+        link.download = collageName + '.png';
+        link.href = url
+        link.click();
+      
+      }
+
+    </script>
+  </body>
+</html>

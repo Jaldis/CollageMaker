@@ -1,0 +1,25 @@
+{
+  "name": "collage-maker",
+  "version": "1.0.0",
+  "description": "image collage maker app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "canvas": "^2.9.1",
+    "express": "^4.18.1",
+    "merge-images-v2": "^2.0.1",
+    "multer": "^1.4.4",
+    "sharp": "^0.30.5",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
