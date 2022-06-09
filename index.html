@@ -37,6 +37,48 @@
         margin: auto;
         width: 700px;
       }
+
+      #toast {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+    } 
+
+    #toast.show {
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+    @-webkit-keyframes fadein {
+      from {bottom: 0; opacity: 0;} 
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+    }
+
+    @-webkit-keyframes fadeout {
+      from {bottom: 30px; opacity: 1;} 
+      to {bottom: 0; opacity: 0;}
+    }
+
+    @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+    }
       
     </style>
   </head>
@@ -118,6 +160,7 @@
         
       </section>
       <section>
+        <div id="toast"></div>
       </section>
     </main>
     <footer style="height: 100px;" id="footer">
@@ -140,16 +183,8 @@
 
         var txtCollage = document.getElementById('txt-collage-name');
         collageName = txtCollage.value
-        if(collageName == '') {
-          alert('Please enter a name');
-          return;
-        }
-        var e = document.getElementById('div-collage');
-        e.style.display = 'block'
-        scrollTo(document.documentElement, e.offsetTop, 600);
-        createDirectory(collageName);
-        txtCollage.disabled = true;
-        this.disabled = true;
+        createDirectory(collageName, txtCollage);
+      
       }
 
       document.querySelector('#file-pic').onchange = function() {   
@@ -177,10 +212,27 @@
         collage2(collageName, mode)
       }
 
-      function createDirectory(dir) {
+      function createDirectory(dir, txtCollage) {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {    
-          console.log('created dir ' + this.responseText)
+          //console.log('created dir ' + this.responseText)
+          if(this.responseText == 'created dir') {
+
+            console.log(this.responseText);
+            var e = document.getElementById('div-collage');
+            e.style.display = 'block'
+            scrollTo(document.documentElement, e.offsetTop, 600);
+            txtCollage.disabled = true;
+            this.disabled = true;  
+                 
+           
+          }
+          else {
+
+            var responseObj = JSON.parse(this.responseText);
+            notify(responseObj.dir_name.msg);
+            
+          }
         }
         xhttp.open("POST", "image/cdir?dir_name=" + collageName);
         xhttp.send({
@@ -205,6 +257,7 @@
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
           console.log(this.responseText);
+          notify("Collage created successfully!")
         }
         xhttp.open('POST', 'image/collage?dir_name=' + collageName + '&mode=' + mode);
         xhttp.send();
@@ -230,12 +283,13 @@
           {
             timesCalled++
             var obj = JSON.parse(this.responseText);
-            console.log(obj);
+            console.log(obj);    
             mergeImages(obj).then(
               b64 => { 
                 //document.getElementById('canvas-image').src = b64
                 //console.log(b64)
                 downloadImage(b64)
+                notify("Collage created successfully!")
               }             
             );         
           }
@@ -253,6 +307,15 @@
         link.href = url
         link.click();
       
+      }
+
+      function notify(msg) {
+        var toast = document.getElementById("toast");
+        toast.innerHTML = msg;
+        toast.className = "show";
+        setTimeout(function(){      
+          toast.className = toast.className.replace("show", ""); 
+        }, 3000);
       }
 
     </script>

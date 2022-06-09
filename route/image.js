@@ -3,6 +3,9 @@ var router = express.Router();
 const { dirname } = require('path');
 const path = require('path');
 
+// express validator
+const { check, validationResult } = require('express-validator');
+
 const upload = require('../service/upload');
 const Resize = require('../service/resize');
 const fileService = require('../service/file');
@@ -17,11 +20,23 @@ router.get('/', function (req, res) {
   res.send('image index');
 })
 
-router.post('/cdir', function (req, res) {
-  const dirName = req.query.dir_name;
-  const p = path.join(appDir, '/public/image/' + dirName);
-  fileService.createDirectory(p);
-  res.send(dirName);
+router.post('/cdir', 
+  [
+    check('dir_name', 'Name is required').notEmpty()
+  ],
+  function (req, res) {
+  let errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    console.log(errors.mapped())
+    res.send(errors.mapped())
+  }
+  else {
+    const dirName = req.query.dir_name;
+    const p = path.join(appDir, '/public/image/' + dirName);
+    fileService.createDirectory(p);
+    res.send('created dir');
+  }
+  
 })
 
 router.post('/', upload.single('image'), async function (req, res) {
